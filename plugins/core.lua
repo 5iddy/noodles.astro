@@ -4,24 +4,32 @@ return {
     "goolord/alpha-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
+      local dashboard = require "alpha.themes.dashboard"
       opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
+        [[███╗  ██╗ █████╗  █████╗ ██████╗ ██╗     ███████╗ ██████╗]],
+        [[████╗ ██║██╔══██╗██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝]],
+        [[██╔██╗██║██║  ██║██║  ██║██║  ██║██║     █████╗  ╚█████╗ ]],
+        [[██║╚████║██║  ██║██║  ██║██║  ██║██║     ██╔══╝   ╚═══██╗]],
+        [[██║ ╚███║╚█████╔╝╚█████╔╝██████╔╝███████╗███████╗██████╔╝]],
+        [[╚═╝  ╚══╝ ╚════╝  ╚════╝ ╚═════╝ ╚══════╝╚══════╝╚═════╝ ]],
+      }
+      opts.section.buttons.val = {
+        dashboard.button("e", "  New file", "<CMD>ene<CR>"),
+        dashboard.button("c", "  Open Nvim Config Dir", "<CMD>cd ~/.config/nvim | NeoTreeFloat<CR>"),
+        dashboard.button("a", "  Open Awesome Config Dir", "<CMD>cd ~/.config/awesome | NeoTreeFloat<CR>"),
+        dashboard.button("C", "  Open Vim Config Dir", "<CMD>cd ~/.vim | NeoTreeFloat<CR>"),
+        dashboard.button("z", "  Open Zshrc Config", "<CMD>e ~/.zshrc<CR>"),
+        dashboard.button("Z", "  Open Zshrc Config", "<CMD>cd ~/.config/zsh | NeoTreeFloat<CR>"),
+        dashboard.button("A", "  Open Alacritty Config", "<CMD>e ~/.config/alacritty/alacritty.yml<CR>"),
+        dashboard.button("<leader>ff", "  Find Files"),
+        dashboard.button("<leader>fr", "  Find Recent Files"),
+        dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
       }
       return opts
     end,
   },
   -- You can disable default plugins as follows:
-  -- { "max397574/better-escape.nvim", enabled = false },
+  { "max397574/better-escape.nvim", enabled = false },
   --
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   -- {
