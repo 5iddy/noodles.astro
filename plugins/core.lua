@@ -1,3 +1,5 @@
+local utils = require "astronvim.utils"
+
 return {
   -- customize alpha options
   {
@@ -15,7 +17,11 @@ return {
       }
       opts.section.buttons.val = {
         dashboard.button("e", "  New file", "<CMD>ene<CR>"),
-        dashboard.button("c", "  Open Nvim Config Dir", "<CMD>cd ~/.config/nvim | NeoTreeFloat<CR>"),
+        dashboard.button(
+          "c",
+          "  Open Nvim Config Dir",
+          "<CMD>cd ~/.config/nvim | e lua/user/init.lua | Neotree<CR>"
+        ),
         dashboard.button("a", "  Open Awesome Config Dir", "<CMD>cd ~/.config/awesome | NeoTreeFloat<CR>"),
         dashboard.button("C", "  Open Vim Config Dir", "<CMD>cd ~/.vim | NeoTreeFloat<CR>"),
         dashboard.button("z", "  Open Zshrc Config", "<CMD>e ~/.zshrc<CR>"),
@@ -30,46 +36,6 @@ return {
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
-  --
-  -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
-  -- {
-  --   "L3MON4D3/LuaSnip",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.luasnip"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- add more custom luasnip configuration such as filetype extend or custom snippets
-  --     local luasnip = require "luasnip"
-  --     luasnip.filetype_extend("javascript", { "javascriptreact" })
-  --   end,
-  -- },
-  -- {
-  --   "windwp/nvim-autopairs",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.nvim-autopairs"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- add more custom autopairs configuration such as custom rules
-  --     local npairs = require "nvim-autopairs"
-  --     local Rule = require "nvim-autopairs.rule"
-  --     local cond = require "nvim-autopairs.conds"
-  --     npairs.add_rules(
-  --       {
-  --         Rule("$", "$", { "tex", "latex" })
-  --           -- don't add a pair if the next character is %
-  --           :with_pair(cond.not_after_regex "%%")
-  --           -- don't add a pair if  the previous character is xxx
-  --           :with_pair(
-  --             cond.not_before_regex("xxx", 3)
-  --           )
-  --           -- don't move right when repeat character
-  --           :with_move(cond.none())
-  --           -- don't delete if the next character is xx
-  --           :with_del(cond.not_after_regex "xx")
-  --           -- disable adding a newline when you press <cr>
-  --           :with_cr(cond.none()),
-  --       },
-  --       -- disable for .vim files, but it work for another filetypes
-  --       Rule("a", "a", "-vim")
-  --     )
-  --   end,
-  -- },
   -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
   -- {
   --   "folke/which-key.nvim",
@@ -82,4 +48,70 @@ return {
   --     }, { mode = "n", prefix = "<leader>" })
   --   end,
   -- },
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = function(_, opts)
+      local function sort_by_type(a, b)
+        if a.type == b.type then
+          return a.path < b.path
+        else
+          return a.type < b.type
+        end
+      end
+
+      opts.sort_function = sort_by_type
+
+      opts.icon = {
+        folder_closed = "",
+        folder_open = "",
+        folder_empty = "",
+      }
+      if not opts.filesystem.filtered_items then opts.filesystem.filtered_items = {} end
+      opts.filesystem.filtered_items.hide_by_name = {
+        "target",
+        ".git",
+      }
+      opts.window.mappings = utils.extend_tbl(opts.window.mappings, {
+        ["a"] = {
+          "add",
+          config = {
+            show_path = "absolute",
+          },
+        },
+      })
+    end,
+  },
+  {
+    "booperlv/nvim-gomove",
+    keys = { "<A-h>", "<A-j>", "<A-k>", "<A-l>" },
+    config = true,
+  },
+  {
+    "jghauser/follow-md-links.nvim",
+    ft = "markdown",
+    init = function() vim.keymap.set("n", "<bs>", ":edit #<cr>", { silent = true }) end,
+  },
+  {
+    "toppair/peek.nvim",
+    ft = "markdown",
+    build = "deno task --quiet build:fast",
+    cmd = { "PeekClose", "PeekOpen" },
+    config = function()
+      local peek = require "peek"
+      local create_cmd = vim.api.nvim_create_user_command
+      peek.setup {
+        app = "firefox",
+      }
+      create_cmd("PeekOpen", peek.open, { desc = "Markdown preview open" })
+      create_cmd("PeekClose", peek.close, { desc = "Markdown preview close" })
+    end,
+  },
+  {
+    "antonk52/markdowny.nvim",
+    ft = "markdown",
+    config = true,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+  },
 }
