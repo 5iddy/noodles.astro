@@ -34,6 +34,10 @@ return {
       "<CMD>bnext<CR>",
       desc = "Buffer next",
     },
+    ["<A-Left>"] = { "<C-w>h", desc = "Move to left split" },
+    ["<A-Right>"] = { "<C-w>l", desc = "Move to right split" },
+    ["<A-Down>"] = { "<C-w>j", desc = "Move to down split" },
+    ["<A-Up>"] = { "<C-w>k", desc = "Move to up split" },
   },
   t = {
     -- setting a mapping to false will disable it
