@@ -63,17 +63,22 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
-    -- Set up custom filetypes
-    -- vim.filetype.add {
-    --   extension = {
-    --     foo = "fooscript",
-    --   },
-    --   filename = {
-    --     ["Foofile"] = "fooscript",
-    --   },
-    --   pattern = {
-    --     ["~/%.config/foo/.*"] = "fooscript",
-    --   },
-    -- }
+    if vim.g.neovide then
+      vim.cmd "set guifont=Mononoki_Nerd_Font:h16"
+      vim.g.neovide_refresh_rate = 60
+      vim.g.neovide_scale_factor = 1
+      vim.g.neovide_hide_mouse_when_typing = true
+      vim.g.neovide_cursor_trail_size = 0.5
+      vim.g.neovide_cursor_vfx_mode = "pixiedust"
+      vim.g.neovide_cursor_vfx_particle_lifetime = 1
+      vim.g.neovide_cursor_vfx_particle_density = 100
+    end
+
+    local autocmd = vim.api.nvim_create_autocmd
+    autocmd("BufWrite", {
+      group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+      pattern = "Cargo.toml",
+      callback = function() vim.cmd "RustReloadWorkspace" end,
+    })
   end,
 }
