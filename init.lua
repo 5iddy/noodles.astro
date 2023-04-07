@@ -4,7 +4,7 @@ return {
     remote = "origin", -- remote to use
     channel = "stable", -- "stable" or "nightly"
     version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "nightly", -- branch name (NIGHTLY ONLY)
+    branch = "main", -- branch name (NIGHTLY ONLY)
     commit = nil, -- commit hash (NIGHTLY ONLY)
     pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
     skip_prompts = false, -- skip prompts about breaking changes
@@ -20,8 +20,13 @@ return {
   colorscheme = "nordfox",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
-    virtual_text = true,
+    virtual_text = {
+      severity = vim.diagnostic.severity.ERROR,
+    },
     underline = true,
+    virtual_lines = {
+      only_current_line = true,
+    },
   },
   lsp = {
     -- customize lsp formatting options
@@ -64,7 +69,7 @@ return {
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
     if vim.g.neovide then
-      vim.cmd "set guifont=Mononoki_Nerd_Font:h16"
+      vim.cmd "set guifont=Mononoki_Nerd_Font:h12"
       vim.g.neovide_refresh_rate = 60
       vim.g.neovide_scale_factor = 1
       vim.g.neovide_hide_mouse_when_typing = true
