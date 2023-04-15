@@ -81,9 +81,53 @@ return {
 
     local autocmd = vim.api.nvim_create_autocmd
     autocmd("BufWrite", {
-      group = vim.api.nvim_create_augroup("CmpSourceCargo", { clear = true }),
+      group = nil,
       pattern = "Cargo.toml",
       callback = function() vim.cmd "RustReloadWorkspace" end,
+    })
+    autocmd("BufReadPost", {
+      group = nil,
+      pattern = "Cargo.toml",
+      callback = function(ctx)
+        local buffer = ctx.buf
+        local crates = require "crates"
+        local unpack = unpack
+        local opts = { silent = true, buffer = buffer }
+
+        vim.keymap.set(
+          "n",
+          "<leader>Rt",
+          crates.toggle,
+          { desc = "Crates show/hide versions virtualtext/diagnostics", unpack(opts) }
+        )
+        vim.keymap.set("n", "<leader>Rr", crates.reload, { desc = "Reload/Clear cache", unpack(opts) })
+
+        vim.keymap.set("n", "<leader>Rv", crates.show_versions_popup, { desc = "Show versions popup", unpack(opts) })
+        vim.keymap.set("n", "<leader>Rf", crates.show_features_popup, { unpack(opts), desc = "show features popup" })
+        vim.keymap.set(
+          "n",
+          "<leader>Rd",
+          crates.show_dependencies_popup,
+          { unpack(opts), desc = "show dependencies popup" }
+        )
+
+        vim.keymap.set("n", "<leader>Ru", crates.update_crate, { unpack(opts), desc = "update crate" })
+        vim.keymap.set("v", "<leader>Ru", crates.update_crates, { unpack(opts), desc = "update crates" })
+        vim.keymap.set("n", "<leader>Ra", crates.update_all_crates, { unpack(opts), desc = "update all crates" })
+        vim.keymap.set("n", "<leader>RU", crates.upgrade_crate, { unpack(opts), desc = "upgrade crate" })
+        vim.keymap.set("v", "<leader>RU", crates.upgrade_crates, { unpack(opts), desc = "upgrade crates" })
+        vim.keymap.set("n", "<leader>RA", crates.upgrade_all_crates, { unpack(opts), desc = "upgrade all crates" })
+
+        vim.keymap.set("n", "<leader>RH", crates.open_homepage, { unpack(opts), desc = "open homepage of the crate" })
+        vim.keymap.set("n", "<leader>RR", crates.open_repository, { unpack(opts), desc = "open crate repo" })
+        vim.keymap.set(
+          "n",
+          "<leader>RD",
+          crates.open_documentation,
+          { unpack(opts), desc = "open documentation of crate" }
+        )
+        vim.keymap.set("n", "<leader>RC", crates.open_crates_io, { unpack(opts), desc = "open crates io" })
+      end,
     })
   end,
 }

@@ -36,6 +36,7 @@ return {
       "garyhurtz/cmp_bulma.nvim",
       config = function() require("cmp_bulma"):setup() end,
     },
+    { "Saecki/crates.nvim" },
   },
   opts = function(_, opts)
     local cmp = require "cmp"
@@ -94,7 +95,7 @@ return {
 
     opts.sources = cmp.config.sources {
       { name = "nvim_lsp", priority = 1000 },
-      { name = "luasnip", priority = 750 },
+      { name = "luasnip",  priority = 750 },
       {
         name = "fuzzy_buffer",
         priority = 500,
@@ -111,7 +112,7 @@ return {
         priority = 250,
         keyword_length = 3,
       },
-      { name = "calc", priority = 100 },
+      { name = "calc",     priority = 100 },
       {
         name = "look",
         option = { convert_case = true, loud = true },
@@ -134,11 +135,14 @@ return {
         priority = 375,
       },
       { name = "emoji", priority = 325 },
-      { name = "zsh", priority = 300 },
-      { name = "rg", keyword_length = 3, priority = 400 },
+      { name = "zsh",   priority = 300 },
+      { name = "rg",    keyword_length = 3, priority = 400 },
       {
         name = "bulma",
         keyword_length = 3,
+      },
+      {
+        name = "crates",
       },
     }
     opts.window = {

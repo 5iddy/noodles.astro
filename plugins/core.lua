@@ -22,15 +22,6 @@ return {
         dashboard.button("<leader>fF", "  Find Recent All Files"),
         dashboard.button("<leader>fg", "  Find Git Files in Repo"),
         dashboard.button("<leader>Sf", "  Find all session"),
-        dashboard.button(
-          "c",
-          "ﱮ  Open Nvim Config Dir",
-          "<CMD>cd ~/.config/nvim/lua/user/ | e init.lua | Neotree<CR>"
-        ),
-        dashboard.button("a", "  Open Awesome Config Dir", "<CMD>cd ~/.config/awesome | NeoTreeFloat<CR>"),
-        dashboard.button("C", "  Open Vim Config Dir", "<CMD>cd ~/.vim | NeoTreeFloat<CR>"),
-        dashboard.button("z", "  Open Zshrc Config Dir", "<CMD>cd ~/.config/zsh | NeoTreeFloat<CR>"),
-        dashboard.button("A", "  Open Alacritty Config", "<CMD>e ~/.config/alacritty/alacritty.yml<CR>"),
         dashboard.button("<leader>q", "  Quit NVIM"),
       }
       return opts
@@ -38,18 +29,6 @@ return {
   },
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
-  -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
-  -- {
-  --   "folke/which-key.nvim",
-  --   config = function(plugin, opts)
-  --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
-  --     -- Add bindings which show up as group name
-  --     local wk = require "which-key"
-  --     wk.register({
-  --       b = { name = "Buffer" },
-  --     }, { mode = "n", prefix = "<leader>" })
-  --   end,
-  -- },
   {
     "nvim-neo-tree/neo-tree.nvim",
     opts = function(_, opts)
@@ -90,13 +69,13 @@ return {
       "<A-j>",
       "<A-k>",
       "<A-l>",
-      { "S-Down", "<Plug>GoNSMDown", desc = "Move Line Down", mode = "n" },
-      { "S-Up", "<Plug>GoNSMUp", desc = "Move Line Up", mode = "n" },
-      { "S-Left", "<Plug>GoNSMLeft", desc = "Move Line Left", mode = "n" },
+      { "S-Down",  "<Plug>GoNSMDown",  desc = "Move Line Down",  mode = "n" },
+      { "S-Up",    "<Plug>GoNSMUp",    desc = "Move Line Up",    mode = "n" },
+      { "S-Left",  "<Plug>GoNSMLeft",  desc = "Move Line Left",  mode = "n" },
       { "S-Right", "<Plug>GoNSMRight", desc = "Move Line Right", mode = "n" },
-      { "S-Down", "<Plug>GoVSMDown", desc = "Move Line Down", mode = "v" },
-      { "S-Up", "<Plug>GoVSMUp", desc = "Move Line Up", mode = "v" },
-      { "S-Left", "<Plug>GoVSMLeft", desc = "Move Line Left", mode = "v" },
+      { "S-Down",  "<Plug>GoVSMDown",  desc = "Move Line Down",  mode = "v" },
+      { "S-Up",    "<Plug>GoVSMUp",    desc = "Move Line Up",    mode = "v" },
+      { "S-Left",  "<Plug>GoVSMLeft",  desc = "Move Line Left",  mode = "v" },
       { "S-Right", "<Plug>GoVSMRight", desc = "Move Line Right", mode = "v" },
     },
     config = true,
@@ -129,4 +108,16 @@ return {
   {
     "ray-x/lsp_signature.nvim",
   },
+  -- By adding to the which-key config and using our helper function you can add more which-key registered bindings
+  -- {
+  --   "folke/which-key.nvim",
+  --   config = function(plugin, opts)
+  --     require "plugins.configs.which-key"(plugin, opts) -- include the default astronvim config that calls the setup call
+  --     -- Add bindings which show up as group name
+  --     local wk = require "which-key"
+  --     wk.register({
+  --       b = { name = "Buffer" },
+  --     }, { mode = "n", prefix = "<leader>" })
+  --   end,
+  -- },
 }
