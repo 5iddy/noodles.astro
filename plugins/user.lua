@@ -26,4 +26,19 @@ return {
     opts = {},
     config = function(_, opts) require("luapad").setup(opts) end,
   },
+  {
+    "navarasu/onedark.nvim",
+    lazy = false,
+    opts = function(_, opts)
+      return vim.tbl_deep_extend("keep", opts, {
+        style = "dark",
+        transparent = false,
+      })
+    end,
+    config = function(_, opts)
+      local onedark = require "onedark"
+      onedark.setup(opts)
+      require("onedark").load()
+    end,
+  },
 }

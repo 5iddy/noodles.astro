@@ -69,7 +69,7 @@ return {
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
     if vim.g.neovide then
-      vim.cmd "set guifont=Mononoki_Nerd_Font:h12"
+      vim.cmd "set guifont=Mononoki_Nerd_Font:h16"
       vim.g.neovide_refresh_rate = 60
       vim.g.neovide_scale_factor = 1
       vim.g.neovide_hide_mouse_when_typing = true

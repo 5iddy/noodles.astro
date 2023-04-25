@@ -11,7 +11,6 @@ return {
   },
   opts = {
     ensure_installed = {
-      "help",
       "lua",
       "python",
       "rust",
